@@ -159,6 +159,20 @@ app.get("/data", function (req, res) {
   }
 });
 
+app.get("/authorize", function (req, res) {
+  console.log(req.url + " attempted authorize");
+  const url = "http://localhost:3001/home/";
+  res.status(302);
+  res.redirect(url);
+});
+
+app.get("/home", function (req, res) {
+  console.log(req.url + " attempted home, add cookie");
+  res
+    .cookie("hello", "12312323", { maxAge: 9000, httpOnly: true })
+    .sendFile("index.html", { root: __dirname });
+});
+
 let port = process.env.PORT || 3001;
 app.listen(port, function () {
   return console.log(
